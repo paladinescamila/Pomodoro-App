@@ -1,0 +1,218 @@
+@import 'tailwindcss';
+
+@theme {
+	--color-white: #ffffff;
+	--color-black: #000000;
+	--color-blue-950: #14172e;
+	--color-blue-900: #161932;
+	--color-blue-850: #1e213f;
+	--color-blue-100: #d7e0ff;
+	--color-blue-50: #eff1fa;
+	--color-grey-400: #bbbdcb;
+	--color-grey-200: #e4e2e2;
+	--color-cyan-300: #70f3f8;
+	--color-red-400: #f87070;
+	--color-purple-400: #d881f8;
+}
+
+@utility gradient {
+	background: linear-gradient(180deg, #2e325a 0%, #0e112a 100%);
+}
+
+:root {
+	--font-1: 'Kumbh Sans', sans-serif;
+	--font-2: 'Roboto Slab', serif;
+	--font-3: 'Space Mono', monospace;
+}
+
+@utility text-preset-1-font-1 {
+	font-family: var(--font-1);
+	font-weight: bold;
+	font-size: 100px;
+	line-height: 125%;
+	letter-spacing: -5px;
+}
+
+@utility text-preset-2-font-1 {
+	font-family: var(--font-1);
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 125%;
+	letter-spacing: 15px;
+}
+
+@utility text-preset-3-font-1 {
+	font-family: var(--font-1);
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 120%;
+	letter-spacing: 0px;
+}
+
+@utility text-preset-1-font-1-mobile {
+	font-family: var(--font-1);
+	font-weight: bold;
+	font-size: 80px;
+	line-height: 125%;
+	letter-spacing: -5px;
+}
+
+@utility text-preset-2-font-1-mobile {
+	font-family: var(--font-1);
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 120%;
+	letter-spacing: 13px;
+}
+
+@utility text-preset-3-font-1-mobile {
+	font-family: var(--font-1);
+	font-weight: bold;
+	font-size: 12px;
+	line-height: 120%;
+	letter-spacing: 0px;
+}
+
+@utility text-preset-1-font-2 {
+	font-family: var(--font-2);
+	font-weight: bold;
+	font-size: 100px;
+	line-height: 130%;
+	letter-spacing: 0px;
+}
+
+@utility text-preset-2-font-2 {
+	font-family: var(--font-2);
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 125%;
+	letter-spacing: 15px;
+}
+
+@utility text-preset-3-font-2 {
+	font-family: var(--font-2);
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 130%;
+	letter-spacing: 0px;
+}
+
+@utility text-preset-1-font-2-mobile {
+	font-family: var(--font-2);
+	font-weight: bold;
+	font-size: 80px;
+	line-height: 133%;
+	letter-spacing: 0px;
+}
+
+@utility text-preset-2-font-2-mobile {
+	font-family: var(--font-2);
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 130%;
+	letter-spacing: 13px;
+}
+
+@utility text-preset-3-font-2-mobile {
+	font-family: var(--font-2);
+	font-weight: bold;
+	font-size: 12px;
+	line-height: 133%;
+	letter-spacing: 0px;
+}
+
+@utility text-preset-1-font-3 {
+	font-family: var(--font-3);
+	font-weight: normal;
+	font-size: 100px;
+	line-height: 150%;
+	letter-spacing: -10px;
+}
+
+@utility text-preset-2-font-3 {
+	font-family: var(--font-3);
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 150%;
+	letter-spacing: 15px;
+}
+
+@utility text-preset-3-font-3 {
+	font-family: var(--font-3);
+	font-weight: bold;
+	font-size: 13px;
+	line-height: 145%;
+	letter-spacing: 0px;
+}
+
+@utility text-preset-1-font-3-mobile {
+	font-family: var(--font-3);
+	font-weight: normal;
+	font-size: 80px;
+	line-height: 120%;
+	letter-spacing: -10px;
+}
+
+@utility text-preset-2-font-3-mobile {
+	font-family: var(--font-3);
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 150%;
+	letter-spacing: 13px;
+}
+
+@utility text-preset-3-font-3-mobile {
+	font-family: var(--font-3);
+	font-weight: bold;
+	font-size: 12px;
+	line-height: 150%;
+	letter-spacing: 0px;
+}
+
+@utility text-preset-1-settings {
+	font-family: var(--font-1);
+	font-weight: bold;
+	font-size: 28px;
+	line-height: 125%;
+	letter-spacing: 0px;
+}
+
+@utility text-preset-2-settings-font-1 {
+	font-family: var(--font-1);
+	font-weight: bold;
+	font-size: 13px;
+	line-height: 145%;
+	letter-spacing: 0px;
+}
+
+@utility text-preset-2-settings-font-2 {
+	font-family: var(--font-2);
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 125%;
+	letter-spacing: 0px;
+}
+
+@utility text-preset-2-settings-font-3 {
+	font-family: var(--font-3);
+	font-weight: bold;
+	font-size: 16px;
+	line-height: 125%;
+	letter-spacing: 0px;
+}
+
+@utility text-preset-3-settings {
+	font-family: var(--font-1);
+	font-weight: bold;
+	font-size: 13px;
+	line-height: 125%;
+	letter-spacing: 5px;
+}
+
+@utility text-preset-4-settings {
+	font-family: var(--font-1);
+	font-weight: bold;
+	font-size: 12px;
+	line-height: 125%;
+	letter-spacing: 0px;
+}
