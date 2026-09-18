@@ -59,7 +59,7 @@ export default function Timer() {
 					/>
 				</svg>
 
-				<div role='region' aria-live='polite' aria-atomic='true'>
+				<div role='region' aria-live='polite' aria-atomic='true' className='mt-7'>
 					<time
 						dateTime='17m 59s'
 						className={`${FONTS_STYLES[settings.font]['text-preset-1']} text-blue-100`}>
