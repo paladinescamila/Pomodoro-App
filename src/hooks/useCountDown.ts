@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {useState, useEffect, useRef, useCallback} from 'react';
 
 /**
@@ -7,39 +8,73 @@ import {useState, useEffect, useRef, useCallback} from 'react';
  */
 export const useCountDown = (initialSeconds: number) => {
 	const [secondsLeft, setSecondsLeft] = useState<number>(initialSeconds);
-	const [isRunning, setIsRunning] = useState<boolean>(false);
+	const [timerState, setTimerState] = useState<TimerState>('initial');
 	const timerRef = useRef<number | null>(null);
 
-	useEffect(() => {
-		if (isRunning) {
-			const decrement = () => setSecondsLeft((prevSeconds) => prevSeconds - 1);
-			timerRef.current = setTimeout(decrement, 1000);
-		} else if (timerRef.current) {
-			clearTimeout(timerRef.current);
+	const clearTimer = useCallback(() => {
+		if (timerRef.current !== null) {
+			clearInterval(timerRef.current);
+			timerRef.current = null;
 		}
+	}, []);
 
-		return () => {
-			if (timerRef.current) {
-				clearTimeout(timerRef.current);
-			}
-		};
-	}, [isRunning, secondsLeft]);
+	const decrement = useCallback(
+		() =>
+			setSecondsLeft((seconds) => {
+				if (seconds <= 1) {
+					setTimerState('completed');
+					clearTimer();
+					return 0;
+				}
 
-	const start = useCallback(() => setIsRunning(true), []);
-	const stop = useCallback(() => setIsRunning(false), []);
-	const toggleTimer = useCallback(() => setIsRunning((prev) => !prev), []);
-
-	const reset = useCallback(
-		(secondsLeft: number = initialSeconds) => {
-			setSecondsLeft(secondsLeft);
-			setIsRunning(false);
-
-			if (timerRef.current) {
-				clearTimeout(timerRef.current);
-			}
-		},
-		[initialSeconds],
+				return seconds - 1;
+			}),
+		[],
 	);
 
-	return {secondsLeft, isRunning, start, stop, toggleTimer, reset};
+	const start = useCallback(() => {
+		setTimerState('running');
+		clearTimer();
+		timerRef.current = setInterval(decrement, 1000);
+	}, [decrement]);
+
+	const stop = useCallback(() => {
+		setTimerState('stopped');
+		clearTimer();
+	}, []);
+
+	const restart = useCallback(() => {
+		setTimerState('initial');
+		clearTimer();
+		setSecondsLeft(initialSeconds);
+	}, [initialSeconds]);
+
+	const toggleTimer = useCallback(
+		() =>
+			timerState === 'initial' || timerState === 'stopped'
+				? start()
+				: timerState === 'running'
+					? stop()
+					: restart(),
+		[timerState],
+	);
+
+	const reset = useCallback(
+		(secondsLeft: number) => {
+			setSecondsLeft(secondsLeft);
+			restart();
+		},
+		[restart],
+	);
+
+	useEffect(() => {
+		const resetTimer = setTimeout(() => reset(initialSeconds), 0);
+
+		return () => {
+			clearTimeout(resetTimer);
+			clearTimer();
+		};
+	}, [initialSeconds]);
+
+	return {secondsLeft, timerState, start, stop, toggleTimer, reset};
 };

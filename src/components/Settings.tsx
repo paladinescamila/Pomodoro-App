@@ -1,34 +1,38 @@
+import {useState} from 'react';
 import {createPortal} from 'react-dom';
+import {useAppStore} from '../stores/app';
 import {MODES, FONTS, COLORS, MODES_NAMES} from '../constants/settings';
 import {FONTS_STYLES_SETTINGS} from '../constants/styles';
 import {COLORS_STYLES} from '../constants/styles';
 import CheckIcon from '../assets/icon-check.svg';
+import ArrowUpIcon from '../assets/icon-arrow-up.svg';
+import ArrowDownIcon from '../assets/icon-arrow-down.svg';
 
-export default function Settings({
-	isOpen,
-	setIsOpen,
-	settings,
-	setSettings,
-}: {
-	isOpen: boolean;
-	setIsOpen: (isOpen: boolean) => void;
-	settings: Settings;
-	setSettings: (settings: Settings) => void;
-}) {
+export default function Settings() {
+	const {settings, setSettings, settingsIsOpened, closeSettings} = useAppStore();
+
+	const [formData, setFormData] = useState<Settings>(settings);
+
 	const onChangeTime = (mode: Mode, duration: string) =>
-		setSettings({...settings, durations: {...settings.durations, [mode]: parseInt(duration, 10)}});
+		setFormData({...formData, durations: {...formData.durations, [mode]: parseInt(duration, 10)}});
 
-	const onChangeFont = (font: Font) => setSettings({...settings, font});
-	const onChangeColor = (color: Color) => setSettings({...settings, color});
+	const onChangeFont = (font: Font) => setFormData({...formData, font});
+	const onChangeColor = (color: Color) => setFormData({...formData, color});
 
 	const applyChanges = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		setIsOpen(false);
+		setSettings(formData);
+		closeSettings();
+	};
+
+	const onClose = () => {
+		setFormData(settings);
+		closeSettings();
 	};
 
 	return createPortal(
 		<dialog
-			open={isOpen}
+			open={settingsIsOpened}
 			aria-labelledby='settings-heading'
 			className='bg-white w-135 px-9 py-8 absolute top-1/2 left-1/2 -translate-1/2 rounded-3xl'>
 			<header className='flex flex-row items-center justify-between'>
@@ -38,8 +42,8 @@ export default function Settings({
 				<button
 					type='button'
 					aria-label='Close settings'
-					className='cursor-pointer'
-					onClick={() => setIsOpen(false)}>
+					className='cursor-pointer opacity-50 hover:opacity-100 transition-opacity'
+					onClick={onClose}>
 					✕
 				</button>
 			</header>
@@ -60,17 +64,35 @@ export default function Settings({
 									className='text-preset-4-settings text-blue-800 opacity-40'>
 									{MODES_NAMES[mode]}
 								</label>
-								<input
-									type='number'
-									id={`${mode}-time`}
-									name={`${mode}Time`}
-									defaultValue={25}
-									value={settings.durations[mode]}
-									onChange={(e) => onChangeTime(mode, e.target.value)}
-									min={1}
-									max={60}
-									className='text-preset-3-settings text-blue-900 p-4 custom-rounded bg-blue-50'
-								/>
+								<div className='relative'>
+									<input
+										type='number'
+										id={`${mode}-time`}
+										name={`${mode}Time`}
+										defaultValue={25}
+										value={formData.durations[mode]}
+										onChange={(e) => onChangeTime(mode, e.target.value)}
+										min={1}
+										max={60}
+										className='text-preset-3-settings text-blue-900 p-4 w-full custom-rounded bg-blue-50 outline outline-transparent focus:outline-grey-200'
+									/>
+									<div className='flex flex-col gap-2 absolute right-4 top-1/2 -translate-y-1/2'>
+										<button
+											type='button'
+											aria-label='Increase time'
+											className='cursor-pointer'
+											onClick={() => onChangeTime(mode, (formData.durations[mode] + 1).toString())}>
+											<img src={ArrowUpIcon} alt='Increase time' className='w-3' />
+										</button>
+										<button
+											type='button'
+											aria-label='Decrease time'
+											className='cursor-pointer'
+											onClick={() => onChangeTime(mode, (formData.durations[mode] - 1).toString())}>
+											<img src={ArrowDownIcon} alt='Decrease time' className='w-3' />
+										</button>
+									</div>
+								</div>
 							</div>
 						))}
 					</div>
@@ -91,11 +113,11 @@ export default function Settings({
 									value={font}
 									className='sr-only'
 									onChange={() => onChangeFont(font)}
-									defaultChecked={settings.font === font}
+									defaultChecked={formData.font === font}
 								/>
 								<label
 									htmlFor={`font-${font}`}
-									className={`${FONTS_STYLES_SETTINGS[font]} w-10 h-10 rounded-full flex items-center justify-center cursor-pointer ${settings.font === font ? 'bg-blue-900 text-white' : 'bg-blue-50 text-blue-850'}`}>
+									className={`${FONTS_STYLES_SETTINGS[font]} w-10 h-10 rounded-full flex items-center justify-center cursor-pointer hover:outline hover:outline-blue-50 hover:outline-offset-3 ${formData.font === font ? 'bg-blue-900 text-white' : 'bg-blue-50 text-blue-850/70'}`}>
 									<span aria-hidden='true'>Aa</span>
 								</label>
 							</div>
@@ -118,13 +140,13 @@ export default function Settings({
 									value={color}
 									className='sr-only'
 									onChange={() => onChangeColor(color)}
-									defaultChecked={settings.color === color}
+									defaultChecked={formData.color === color}
 								/>
 								<label
 									htmlFor={`color-${color}`}
-									className={`w-10 h-10 rounded-full cursor-pointer flex items-center justify-center ${COLORS_STYLES[color].background}`}>
+									className={`w-10 h-10 rounded-full cursor-pointer flex items-center justify-center hover:outline hover:outline-blue-50 hover:outline-offset-3  ${COLORS_STYLES[color].background}`}>
 									<span className='sr-only'>{color} theme</span>
-									{settings.color === color && <img src={CheckIcon} />}
+									{formData.color === color && <img src={CheckIcon} />}
 								</label>
 							</div>
 						))}
