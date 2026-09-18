@@ -1,5 +1,7 @@
 import {createPortal} from 'react-dom';
-import {MODES, FONTS, COLORS, COLORS_STYLES, MODES_NAMES} from '../constants/settings';
+import {MODES, FONTS, COLORS, MODES_NAMES} from '../constants/settings';
+import {FONTS_STYLES_SETTINGS} from '../constants/styles';
+import {COLORS_STYLES} from '../constants/styles';
 import CheckIcon from '../assets/icon-check.svg';
 
 export default function Settings({
@@ -18,6 +20,11 @@ export default function Settings({
 
 	const onChangeFont = (font: Font) => setSettings({...settings, font});
 	const onChangeColor = (color: Color) => setSettings({...settings, color});
+
+	const applyChanges = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		setIsOpen(false);
+	};
 
 	return createPortal(
 		<dialog
@@ -39,9 +46,11 @@ export default function Settings({
 
 			<hr className='w-full h-px bg-blue-900 opacity-10 my-8' />
 
-			<form method='dialog'>
-				<fieldset className='flex flex-col gap-4'>
-					<legend className='text-preset-3-settings text-blue-900 uppercase'>Time (Minutes)</legend>
+			<form method='dialog' onSubmit={applyChanges}>
+				<fieldset className='flex flex-col'>
+					<legend className='text-preset-3-settings text-blue-900 uppercase mb-4'>
+						Time (Minutes)
+					</legend>
 
 					<div className='flex flex-row gap-6'>
 						{MODES.map((mode) => (
@@ -85,8 +94,8 @@ export default function Settings({
 									defaultChecked={settings.font === font}
 								/>
 								<label
-									htmlFor='font-sans'
-									className={`text-preset-2-settings-font-1 w-10 h-10 rounded-full flex items-center justify-center cursor-pointer ${settings.font === font ? 'bg-blue-900 text-white' : 'bg-blue-50 text-blue-850'}`}>
+									htmlFor={`font-${font}`}
+									className={`${FONTS_STYLES_SETTINGS[font]} w-10 h-10 rounded-full flex items-center justify-center cursor-pointer ${settings.font === font ? 'bg-blue-900 text-white' : 'bg-blue-50 text-blue-850'}`}>
 									<span aria-hidden='true'>Aa</span>
 								</label>
 							</div>
@@ -113,7 +122,7 @@ export default function Settings({
 								/>
 								<label
 									htmlFor={`color-${color}`}
-									className={`w-10 h-10 rounded-full cursor-pointer flex items-center justify-center ${COLORS_STYLES[color]}`}>
+									className={`w-10 h-10 rounded-full cursor-pointer flex items-center justify-center ${COLORS_STYLES[color].background}`}>
 									<span className='sr-only'>{color} theme</span>
 									{settings.color === color && <img src={CheckIcon} />}
 								</label>
@@ -125,7 +134,7 @@ export default function Settings({
 				<footer className='absolute left-1/2 -translate-x-1/2'>
 					<button
 						type='submit'
-						className='w-35 p-4 bg-red-400 rounded-full text-preset-2-settings-font-1 text-white'>
+						className='w-35 p-4 bg-red-400 rounded-full text-preset-2-settings-font-1 text-white cursor-pointer'>
 						Apply
 					</button>
 				</footer>

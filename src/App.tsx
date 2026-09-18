@@ -6,6 +6,7 @@ import {formatSeconds} from './utils/formatSeconds';
 import Settings from './components/Settings';
 import {useCountDown} from './hooks/useCountDown';
 import {getSecondsOfMode} from './utils/getSecondsOfMode';
+import {COLORS_STYLES, FONTS_STYLES} from './constants/styles';
 import './index.css';
 
 function App() {
@@ -40,7 +41,7 @@ function App() {
 									<button
 										type='button'
 										aria-pressed='true'
-										className={`text-preset-3-font-1 w-30 h-12 rounded-full ${mode === modeItem ? 'text-blue-850 bg-red-400' : 'text-blue-100 opacity-40 hover:opacity-100 cursor-pointer'}`}
+										className={`${FONTS_STYLES[settings.font]['text-preset-3'].main} w-30 h-12 rounded-full cursor-pointer ${mode === modeItem ? `text-blue-850 ${COLORS_STYLES[settings.color].background}` : 'text-blue-100 opacity-40 hover:opacity-100'}`}
 										onClick={() => handleModeChange(modeItem)}>
 										{MODES_NAMES[modeItem]}
 									</button>
@@ -54,7 +55,9 @@ function App() {
 					aria-label='Timer Controls'
 					className='mb-16 flex flex-col items-center justify-center bg-blue-900 w-91.5 h-91.5 rounded-full'>
 					<div role='region' aria-live='polite' aria-atomic='true'>
-						<time dateTime='17m 59s' className='text-preset-1-font-1 text-blue-100'>
+						<time
+							dateTime='17m 59s'
+							className={`${FONTS_STYLES[settings.font]['text-preset-1'].main} text-blue-100`}>
 							{formatSeconds(secondsLeft)}
 						</time>
 					</div>
@@ -62,7 +65,7 @@ function App() {
 						type='button'
 						aria-label='Pause timer'
 						onClick={toggleTimer}
-						className='text-preset-2-font-1 text-blue-100 uppercase cursor-pointer'>
+						className={`${FONTS_STYLES[settings.font]['text-preset-2'].main} text-blue-100 ${COLORS_STYLES[settings.color].text} uppercase cursor-pointer`}>
 						{isRunning ? 'pause' : 'start'}
 					</button>
 				</section>
