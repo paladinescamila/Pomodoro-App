@@ -34,133 +34,147 @@ export default function Settings() {
 		<dialog
 			open={settingsIsOpened}
 			aria-labelledby='settings-heading'
-			className='bg-white w-135 px-9 py-8 absolute top-1/2 left-1/2 -translate-1/2 rounded-3xl'>
-			<header className='flex flex-row items-center justify-between'>
-				<h2 id='settings-heading' className='text-preset-1-settings text-blue-900'>
-					Settings
-				</h2>
-				<button
-					type='button'
-					aria-label='Close settings'
-					className='cursor-pointer opacity-50 hover:opacity-100 transition-opacity'
-					onClick={onClose}>
-					✕
-				</button>
-			</header>
+			className='absolute inset-0 flex items-center justify-center w-full h-dvh bg-blue-850/50 backdrop-blur-sm p-4'>
+			<div className='bg-white w-full md:w-135 px-9 pt-8 pb-14 rounded-3xl relative'>
+				<header className='flex flex-row items-center justify-between'>
+					<h2 id='settings-heading' className='text-preset-1-settings text-blue-900'>
+						Settings
+					</h2>
+					<button
+						type='button'
+						aria-label='Close settings'
+						className='cursor-pointer opacity-50 hover:opacity-100 transition-opacity'
+						onClick={onClose}>
+						✕
+					</button>
+				</header>
 
-			<hr className='w-full h-px bg-blue-900 opacity-10 my-8' />
+				<hr className='w-full h-px bg-blue-900 opacity-10 my-8' />
 
-			<form method='dialog' onSubmit={applyChanges}>
-				<fieldset className='flex flex-col'>
-					<legend className='text-preset-3-settings text-blue-900 uppercase mb-4'>
-						Time (Minutes)
-					</legend>
+				<form method='dialog' onSubmit={applyChanges}>
+					<fieldset className='flex flex-col'>
+						<legend className='text-preset-3-settings text-blue-900 uppercase mb-4'>
+							Time (Minutes)
+						</legend>
 
-					<div className='flex flex-row gap-6'>
-						{MODES.map((mode) => (
-							<div key={mode} className='flex flex-col gap-2 flex-1'>
-								<label
-									htmlFor={`${mode}-time`}
-									className='text-preset-4-settings text-blue-800 opacity-40'>
-									{MODES_NAMES[mode]}
-								</label>
-								<div className='relative'>
-									<input
-										type='number'
-										id={`${mode}-time`}
-										name={`${mode}Time`}
-										defaultValue={25}
-										value={formData.durations[mode]}
-										onChange={(e) => onChangeTime(mode, e.target.value)}
-										min={1}
-										max={60}
-										className='text-preset-3-settings text-blue-900 p-4 w-full custom-rounded bg-blue-50 outline outline-transparent focus:outline-grey-200'
-									/>
-									<div className='flex flex-col gap-2 absolute right-4 top-1/2 -translate-y-1/2'>
-										<button
-											type='button'
-											aria-label='Increase time'
-											className='cursor-pointer'
-											onClick={() => onChangeTime(mode, (formData.durations[mode] + 1).toString())}>
-											<img src={ArrowUpIcon} alt='Increase time' className='w-3' />
-										</button>
-										<button
-											type='button'
-											aria-label='Decrease time'
-											className='cursor-pointer'
-											onClick={() => onChangeTime(mode, (formData.durations[mode] - 1).toString())}>
-											<img src={ArrowDownIcon} alt='Decrease time' className='w-3' />
-										</button>
+						<div className='flex flex-col md:flex-row gap-6'>
+							{MODES.map((mode) => (
+								<div
+									key={mode}
+									className='flex flex-row md:flex-col items-center md:items-start justify-between gap-2 flex-1'>
+									<label
+										htmlFor={`${mode}-time`}
+										className='text-preset-4-settings text-blue-850 opacity-40'>
+										{MODES_NAMES[mode]}
+									</label>
+									<div className='relative w-35 md:w-full'>
+										<input
+											type='number'
+											id={`${mode}-time`}
+											name={`${mode}Time`}
+											defaultValue={25}
+											value={formData.durations[mode]}
+											onChange={(e) => onChangeTime(mode, e.target.value)}
+											min={1}
+											max={60}
+											className='text-preset-3-settings text-blue-900 p-4 w-full custom-rounded bg-blue-50 outline outline-transparent focus:outline-grey-200'
+										/>
+										<div className='flex flex-col gap-2 absolute right-4 top-1/2 -translate-y-1/2'>
+											<button
+												type='button'
+												aria-label='Increase time'
+												className='cursor-pointer'
+												onClick={() =>
+													onChangeTime(mode, (formData.durations[mode] + 1).toString())
+												}>
+												<img src={ArrowUpIcon} alt='Increase time' className='w-3' />
+											</button>
+											<button
+												type='button'
+												aria-label='Decrease time'
+												className='cursor-pointer'
+												onClick={() =>
+													onChangeTime(mode, (formData.durations[mode] - 1).toString())
+												}>
+												<img src={ArrowDownIcon} alt='Decrease time' className='w-3' />
+											</button>
+										</div>
 									</div>
 								</div>
+							))}
+						</div>
+					</fieldset>
+
+					<hr className='w-full h-px bg-blue-900 opacity-10 my-6' />
+
+					<fieldset>
+						<legend className='sr-only'>Font</legend>
+
+						<div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
+							<span className='text-preset-3-settings text-blue-900 uppercase'>Font</span>
+							<div className='flex flex-row gap-4 items-center justify-center'>
+								{FONTS.map((font) => (
+									<div key={font}>
+										<input
+											type='radio'
+											id={`font-${font}`}
+											name='fontTheme'
+											value={font}
+											className='sr-only'
+											onChange={() => onChangeFont(font)}
+											defaultChecked={formData.font === font}
+										/>
+										<label
+											htmlFor={`font-${font}`}
+											className={`${FONTS_STYLES_SETTINGS[font]} w-10 h-10 rounded-full flex items-center justify-center cursor-pointer hover:outline hover:outline-blue-50 hover:outline-offset-3 ${formData.font === font ? 'bg-blue-900 text-white' : 'bg-blue-50 text-blue-850/70'}`}>
+											<span aria-hidden='true'>Aa</span>
+										</label>
+									</div>
+								))}
 							</div>
-						))}
-					</div>
-				</fieldset>
+						</div>
+					</fieldset>
 
-				<hr className='w-full h-px bg-blue-900 opacity-10 my-6' />
+					<hr className='w-full h-px bg-blue-900 opacity-10 my-6' />
 
-				<fieldset className='flex flex-row items-center justify-between'>
-					<legend className='text-preset-3-settings text-blue-900 uppercase'>Font</legend>
+					<fieldset>
+						<legend className='sr-only'>Color</legend>
 
-					<div className='flex flex-row gap-4 items-center justify-center'>
-						{FONTS.map((font) => (
-							<div key={font}>
-								<input
-									type='radio'
-									id={`font-${font}`}
-									name='fontTheme'
-									value={font}
-									className='sr-only'
-									onChange={() => onChangeFont(font)}
-									defaultChecked={formData.font === font}
-								/>
-								<label
-									htmlFor={`font-${font}`}
-									className={`${FONTS_STYLES_SETTINGS[font]} w-10 h-10 rounded-full flex items-center justify-center cursor-pointer hover:outline hover:outline-blue-50 hover:outline-offset-3 ${formData.font === font ? 'bg-blue-900 text-white' : 'bg-blue-50 text-blue-850/70'}`}>
-									<span aria-hidden='true'>Aa</span>
-								</label>
+						<div className='flex flex-col md:flex-row gap-4 items-center justify-between'>
+							<span className='text-preset-3-settings text-blue-900 uppercase'>Color</span>
+							<div className='flex flex-row gap-4 items-center justify-center'>
+								{COLORS.map((color) => (
+									<div key={color}>
+										<input
+											type='radio'
+											id={`color-${color}`}
+											name='colorTheme'
+											value={color}
+											className='sr-only'
+											onChange={() => onChangeColor(color)}
+											defaultChecked={formData.color === color}
+										/>
+										<label
+											htmlFor={`color-${color}`}
+											className={`w-10 h-10 rounded-full cursor-pointer flex items-center justify-center hover:outline hover:outline-blue-50 hover:outline-offset-3  ${COLORS_STYLES[color].background}`}>
+											<span className='sr-only'>{color} theme</span>
+											{formData.color === color && <img src={CheckIcon} />}
+										</label>
+									</div>
+								))}
 							</div>
-						))}
-					</div>
-				</fieldset>
+						</div>
+					</fieldset>
 
-				<hr className='w-full h-px bg-blue-900 opacity-10 my-6' />
-
-				<fieldset className='flex flex-row items-center justify-between'>
-					<legend className='text-preset-3-settings text-blue-900 uppercase'>Color</legend>
-
-					<div className='flex flex-row gap-4 items-center justify-center'>
-						{COLORS.map((color) => (
-							<div key={color}>
-								<input
-									type='radio'
-									id={`color-${color}`}
-									name='colorTheme'
-									value={color}
-									className='sr-only'
-									onChange={() => onChangeColor(color)}
-									defaultChecked={formData.color === color}
-								/>
-								<label
-									htmlFor={`color-${color}`}
-									className={`w-10 h-10 rounded-full cursor-pointer flex items-center justify-center hover:outline hover:outline-blue-50 hover:outline-offset-3  ${COLORS_STYLES[color].background}`}>
-									<span className='sr-only'>{color} theme</span>
-									{formData.color === color && <img src={CheckIcon} />}
-								</label>
-							</div>
-						))}
-					</div>
-				</fieldset>
-
-				<footer className='absolute left-1/2 -translate-x-1/2'>
-					<button
-						type='submit'
-						className='w-35 p-4 bg-red-400 rounded-full text-preset-2-settings-font-1 text-white cursor-pointer'>
-						Apply
-					</button>
-				</footer>
-			</form>
+					<footer className='absolute left-1/2 -translate-x-1/2 -bottom-6'>
+						<button
+							type='submit'
+							className='w-35 p-4 bg-red-400 rounded-full text-preset-2-settings-font-1 text-white cursor-pointer'>
+							Apply
+						</button>
+					</footer>
+				</form>
+			</div>
 		</dialog>,
 		document.body,
 	);

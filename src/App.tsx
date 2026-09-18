@@ -7,7 +7,7 @@ import Settings from './components/Settings';
 import './index.css';
 
 function App() {
-	const {openSettings} = useAppStore();
+	const {settingsIsOpened, openSettings} = useAppStore();
 
 	return (
 		<>
@@ -30,7 +30,7 @@ function App() {
 					</button>
 				</footer>
 			</main>
-			<Settings />
+			{settingsIsOpened && <Settings />}
 		</>
 	);
 }
