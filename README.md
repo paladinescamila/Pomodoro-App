@@ -6,7 +6,7 @@ This is a solution to the [Pomodoro App challenge on Frontend Mentor](https://ww
 
 ## Links
 
-- [Solution]()
+- [Solution](https://github.com/paladinescamila/Pomodoro-App)
 - [Live Site](http://pomodoro-app-paladinescamila.netlify.app)
 
 ## Built with
@@ -14,10 +14,16 @@ This is a solution to the [Pomodoro App challenge on Frontend Mentor](https://ww
 - React.js
 - TypeScript
 - TailwindCSS
+- Vitest
+- Testing Library
 
 ## What I learned
 
+-
+
 ## Continue development
+
+-
 
 ## Author
 
