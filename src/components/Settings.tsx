@@ -53,11 +53,11 @@ export default function Settings() {
 
 				<form method='dialog' onSubmit={applyChanges}>
 					<fieldset className='flex flex-col'>
-						<legend className='text-preset-3-settings text-blue-900 uppercase mb-4'>
+						<legend className='text-preset-3-settings text-blue-900 uppercase mb-4 text-center md:text-start'>
 							Time (Minutes)
 						</legend>
 
-						<div className='flex flex-col md:flex-row gap-6'>
+						<div className='flex flex-col md:flex-row gap-2 md:gap-6'>
 							{MODES.map((mode) => (
 								<div
 									key={mode}
@@ -77,7 +77,7 @@ export default function Settings() {
 											onChange={(e) => onChangeTime(mode, e.target.value)}
 											min={1}
 											max={60}
-											className='text-preset-3-settings text-blue-900 p-4 w-full custom-rounded bg-blue-50 outline outline-transparent focus:outline-grey-200'
+											className='text-preset-3-settings text-blue-900 p-4 w-full custom-rounded bg-blue-50 outline outline-transparent focus:outline-blue-850/25'
 										/>
 										<div className='flex flex-col gap-2 absolute right-4 top-1/2 -translate-y-1/2'>
 											<button
