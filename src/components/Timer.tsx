@@ -59,11 +59,11 @@ export default function Timer() {
 					/>
 				</svg>
 
-				<div role='region' aria-live='polite' aria-atomic='true' className='mt-7'>
+				<div role='region' aria-atomic='true' className='mt-7'>
 					<time
-						dateTime='17m 59s'
+						dateTime={formatSeconds(secondsLeft, 'MMm SSs')}
 						className={`${FONTS_STYLES[settings.font]['text-preset-1']} text-blue-100`}>
-						{formatSeconds(secondsLeft)}
+						{formatSeconds(secondsLeft, 'MM:SS')}
 					</time>
 				</div>
 

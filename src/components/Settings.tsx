@@ -81,7 +81,7 @@ export default function Settings({close}: {close: () => void}) {
 										<div className='flex flex-col gap-2 absolute right-4 top-1/2 -translate-y-1/2'>
 											<button
 												type='button'
-												aria-label='Increase time'
+												aria-label={`Increase ${mode} time`}
 												className='opacity-25 hover:opacity-100 transition-opacity cursor-pointer disabled:cursor-not-allowed disabled:hover:opacity-25'
 												disabled={formData.durations[mode] >= MAX_DURATION}
 												onClick={() =>
@@ -91,7 +91,7 @@ export default function Settings({close}: {close: () => void}) {
 											</button>
 											<button
 												type='button'
-												aria-label='Decrease time'
+												aria-label={`Decrease ${mode} time`}
 												className='opacity-25 hover:opacity-100 transition-opacity cursor-pointer disabled:cursor-not-allowed disabled:hover:opacity-25'
 												disabled={formData.durations[mode] <= MIN_DURATION}
 												onClick={() =>
@@ -122,6 +122,7 @@ export default function Settings({close}: {close: () => void}) {
 											name='fontTheme'
 											value={font}
 											className='sr-only'
+											aria-label={`Select ${font} font`}
 											onChange={() => onChangeFont(font)}
 											defaultChecked={formData.font === font}
 										/>
@@ -152,6 +153,7 @@ export default function Settings({close}: {close: () => void}) {
 											name='colorTheme'
 											value={color}
 											className='sr-only'
+											aria-label={`Select ${color} color theme`}
 											onChange={() => onChangeColor(color)}
 											defaultChecked={formData.color === color}
 										/>

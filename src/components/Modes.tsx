@@ -13,7 +13,7 @@ export default function Modes() {
 						<li key={modeItem} className='w-full md:w-30 h-12'>
 							<button
 								type='button'
-								aria-pressed='true'
+								aria-pressed={mode === modeItem}
 								className={`${FONTS_STYLES[settings.font]['text-preset-3']} transition-all w-full h-full rounded-full cursor-pointer ${mode === modeItem ? `text-blue-850 ${COLORS_STYLES[settings.color].background}` : 'text-blue-100 opacity-40 hover:opacity-100'}`}
 								onClick={() => setMode(modeItem)}>
 								{MODES_NAMES[modeItem]}

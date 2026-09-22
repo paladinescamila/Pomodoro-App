@@ -58,7 +58,7 @@ export const useCountDown = (initialSeconds: number) => {
 				: timerState === 'running'
 					? stop()
 					: restart(),
-		[timerState],
+		[timerState, start, stop, restart],
 	);
 
 	const reset = useCallback(
