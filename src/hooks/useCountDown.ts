@@ -70,13 +70,10 @@ export const useCountDown = (initialSeconds: number) => {
 	);
 
 	useEffect(() => {
-		const resetTimer = setTimeout(() => reset(initialSeconds), 0);
-
 		return () => {
-			clearTimeout(resetTimer);
 			clearTimer();
 		};
-	}, [initialSeconds]);
+	}, []);
 
 	return {secondsLeft, timerState, start, stop, toggleTimer, reset};
 };
