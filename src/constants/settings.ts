@@ -8,6 +8,10 @@ export const INITIAL_SETTINGS: Settings = {
 	color: 'red',
 };
 
+export const MIN_DURATION = 1;
+
+export const MAX_DURATION = 60;
+
 export const MODES: Mode[] = ['pomodoro', 'short-break', 'long-break'];
 
 export const MODES_NAMES: Record<Mode, string> = {

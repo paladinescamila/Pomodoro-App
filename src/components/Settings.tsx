@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {createPortal} from 'react-dom';
 import {useAppStore} from '../stores/app';
-import {MODES, FONTS, COLORS, MODES_NAMES} from '../constants/settings';
+import {MODES, FONTS, COLORS, MODES_NAMES, MIN_DURATION, MAX_DURATION} from '../constants/settings';
 import {FONTS_STYLES_SETTINGS} from '../constants/styles';
 import {COLORS_STYLES} from '../constants/styles';
 import CheckIcon from '../assets/icon-check.svg';
@@ -74,36 +74,30 @@ export default function Settings({close}: {close: () => void}) {
 											name={`${mode}Time`}
 											value={formData.durations[mode]}
 											onChange={(e) => onChangeTime(mode, e.target.value)}
-											min={1}
-											max={60}
+											min={MIN_DURATION}
+											max={MAX_DURATION}
 											className='text-preset-3-settings text-blue-900 p-4 w-full custom-rounded bg-blue-50 outline outline-transparent focus:outline-blue-850/25 transition-colors'
 										/>
 										<div className='flex flex-col gap-2 absolute right-4 top-1/2 -translate-y-1/2'>
 											<button
 												type='button'
 												aria-label='Increase time'
-												className='cursor-pointer'
+												className='opacity-25 hover:opacity-100 transition-opacity cursor-pointer disabled:cursor-not-allowed disabled:hover:opacity-25'
+												disabled={formData.durations[mode] >= MAX_DURATION}
 												onClick={() =>
 													onChangeTime(mode, (formData.durations[mode] + 1).toString())
 												}>
-												<img
-													src={ArrowUpIcon}
-													alt='Increase time'
-													className='w-3 opacity-25 hover:opacity-100 transition-opacity'
-												/>
+												<img src={ArrowUpIcon} alt='Increase time' className='w-3' />
 											</button>
 											<button
 												type='button'
 												aria-label='Decrease time'
-												className='cursor-pointer'
+												className='opacity-25 hover:opacity-100 transition-opacity cursor-pointer disabled:cursor-not-allowed disabled:hover:opacity-25'
+												disabled={formData.durations[mode] <= MIN_DURATION}
 												onClick={() =>
 													onChangeTime(mode, (formData.durations[mode] - 1).toString())
 												}>
-												<img
-													src={ArrowDownIcon}
-													alt='Decrease time'
-													className='w-3 opacity-25 hover:opacity-100 transition-opacity'
-												/>
+												<img src={ArrowDownIcon} alt='Decrease time' className='w-3' />
 											</button>
 										</div>
 									</div>
