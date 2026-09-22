@@ -8,10 +8,6 @@ interface AppState {
 
 	settings: Settings;
 	setSettings: (settings: Settings) => void;
-
-	settingsIsOpened: boolean;
-	openSettings: () => void;
-	closeSettings: () => void;
 }
 
 export const useAppStore = create<AppState>()(
@@ -22,10 +18,6 @@ export const useAppStore = create<AppState>()(
 
 			settings: INITIAL_SETTINGS,
 			setSettings: (settings: Settings) => set({settings}),
-
-			settingsIsOpened: false,
-			openSettings: () => set({settingsIsOpened: true}),
-			closeSettings: () => set({settingsIsOpened: false}),
 		}),
 		{
 			name: 'pomodoro-app-storage',

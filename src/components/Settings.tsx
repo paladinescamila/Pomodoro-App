@@ -8,8 +8,8 @@ import CheckIcon from '../assets/icon-check.svg';
 import ArrowUpIcon from '../assets/icon-arrow-up.svg';
 import ArrowDownIcon from '../assets/icon-arrow-down.svg';
 
-export default function Settings() {
-	const {settings, setSettings, settingsIsOpened, closeSettings} = useAppStore();
+export default function Settings({close}: {close: () => void}) {
+	const {settings, setSettings} = useAppStore();
 
 	const [formData, setFormData] = useState<Settings>(settings);
 
@@ -22,17 +22,17 @@ export default function Settings() {
 	const applyChanges = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setSettings(formData);
-		closeSettings();
+		close();
 	};
 
 	const onClose = () => {
 		setFormData(settings);
-		closeSettings();
+		close();
 	};
 
 	return createPortal(
 		<dialog
-			open={settingsIsOpened}
+			open={true}
 			aria-labelledby='settings-heading'
 			className='absolute inset-0 flex items-center justify-center w-full h-dvh bg-blue-850/50 backdrop-blur-sm p-4'>
 			<div className='bg-white w-full md:w-135 px-9 pt-8 pb-14 rounded-3xl relative'>
