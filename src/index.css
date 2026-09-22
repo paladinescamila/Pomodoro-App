@@ -24,8 +24,9 @@
 }
 
 @utility custom-shadow {
-	box-shadow: -50px -50px 100px 0 #272c5a;
-	box-shadow: 50px 50px 100px 0 #121530;
+	box-shadow:
+		-50px -50px 100px 0 #272c5a,
+		50px 50px 100px 0 #121530;
 }
 
 :root {

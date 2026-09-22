@@ -6,7 +6,7 @@ export default function Modes() {
 	const {mode, setMode, settings} = useAppStore();
 
 	return (
-		<section aria-label='Timer Mode Selection' className='w-full'>
+		<section aria-label='Timer Mode Selection' className='w-full z-10'>
 			<nav className='mt-10 md:mt-14 mb-12 md:mb-9 w-full flex flex-row items-center justify-center'>
 				<ul className='flex flex-row bg-blue-900 rounded-full px-2.5 py-[7.5px] w-full md:w-max'>
 					{MODES.map((modeItem) => (

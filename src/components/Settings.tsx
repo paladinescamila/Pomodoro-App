@@ -34,7 +34,7 @@ export default function Settings({close}: {close: () => void}) {
 		<dialog
 			open={true}
 			aria-labelledby='settings-heading'
-			className='absolute inset-0 flex items-center justify-center w-full h-dvh bg-blue-850/50 backdrop-blur-sm p-4'>
+			className='absolute inset-0 flex items-center justify-center w-full h-dvh bg-blue-850/50 backdrop-blur-sm p-4 z-20'>
 			<div className='bg-white w-full md:w-135 px-9 pt-8 pb-14 rounded-3xl relative'>
 				<header className='flex flex-row items-center justify-between'>
 					<h2 id='settings-heading' className='text-preset-1-settings text-blue-900'>
