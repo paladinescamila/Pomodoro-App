@@ -13,8 +13,19 @@ export default function Settings({close}: {close: () => void}) {
 
 	const [formData, setFormData] = useState<Settings>(settings);
 
-	const onChangeTime = (mode: Mode, duration: string) =>
-		setFormData({...formData, durations: {...formData.durations, [mode]: parseInt(duration, 10)}});
+	const onChangeTime = (mode: Mode, duration: string) => {
+		const numericDuration = parseInt(duration, 10);
+
+		if (
+			isNaN(numericDuration) ||
+			numericDuration < MIN_DURATION ||
+			numericDuration > MAX_DURATION
+		) {
+			return;
+		}
+
+		setFormData({...formData, durations: {...formData.durations, [mode]: numericDuration}});
+	};
 
 	const onChangeFont = (font: Font) => setFormData({...formData, font});
 	const onChangeColor = (color: Color) => setFormData({...formData, color});

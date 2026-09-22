@@ -4,14 +4,17 @@
  * @param format - The format to use for the output string.
  * @returns A string representing the formatted time in the specified format.
  */
-export const formatSeconds = (seconds: number, format: 'MM:SS' | 'MMm SSs'): string => {
+export const formatSeconds = (
+	seconds: number,
+	format: 'mm:ss' | 'PTmmMssS' = 'PTmmMssS',
+): string => {
 	const minutes = Math.floor(seconds / 60);
 	const remainingSeconds = seconds % 60;
 
 	const formattedMinutes = String(minutes).padStart(2, '0');
 	const formattedSeconds = String(remainingSeconds).padStart(2, '0');
 
-	return format === 'MM:SS'
+	return format === 'mm:ss'
 		? `${formattedMinutes}:${formattedSeconds}`
-		: `${formattedMinutes}m ${formattedSeconds}s`;
+		: `PT${formattedMinutes}M${formattedSeconds}S`;
 };

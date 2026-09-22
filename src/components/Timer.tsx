@@ -15,6 +15,7 @@ export default function Timer() {
 
 	const {isMobile} = useResponsive();
 
+	// If the mode changes, reset the timer to the new mode's duration
 	useEffect(() => {
 		reset(totalSeconds);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -61,9 +62,9 @@ export default function Timer() {
 
 				<div role='region' aria-atomic='true' className='mt-7'>
 					<time
-						dateTime={formatSeconds(secondsLeft, 'MMm SSs')}
+						dateTime={formatSeconds(secondsLeft, 'PTmmMssS')}
 						className={`${FONTS_STYLES[settings.font]['text-preset-1']} text-blue-100`}>
-						{formatSeconds(secondsLeft, 'MM:SS')}
+						{formatSeconds(secondsLeft, 'mm:ss')}
 					</time>
 				</div>
 
