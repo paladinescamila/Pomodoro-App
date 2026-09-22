@@ -72,7 +72,6 @@ export default function Settings({close}: {close: () => void}) {
 											type='number'
 											id={`${mode}-time`}
 											name={`${mode}Time`}
-											defaultValue={25}
 											value={formData.durations[mode]}
 											onChange={(e) => onChangeTime(mode, e.target.value)}
 											min={1}
