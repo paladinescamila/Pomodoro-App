@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {useState, useEffect, useRef, useCallback} from 'react';
+import {playNotification} from '../utils/playNotification';
 
 /**
  * Custom hook to manage a countdown timer.
@@ -24,6 +25,7 @@ export const useCountDown = (initialSeconds: number) => {
 				if (seconds <= 1) {
 					setTimerState('completed');
 					clearTimer();
+					playNotification();
 					return 0;
 				}
 
