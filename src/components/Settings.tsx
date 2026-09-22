@@ -77,7 +77,7 @@ export default function Settings() {
 											onChange={(e) => onChangeTime(mode, e.target.value)}
 											min={1}
 											max={60}
-											className='text-preset-3-settings text-blue-900 p-4 w-full custom-rounded bg-blue-50 outline outline-transparent focus:outline-blue-850/25'
+											className='text-preset-3-settings text-blue-900 p-4 w-full custom-rounded bg-blue-50 outline outline-transparent focus:outline-blue-850/25 transition-colors'
 										/>
 										<div className='flex flex-col gap-2 absolute right-4 top-1/2 -translate-y-1/2'>
 											<button
@@ -87,7 +87,11 @@ export default function Settings() {
 												onClick={() =>
 													onChangeTime(mode, (formData.durations[mode] + 1).toString())
 												}>
-												<img src={ArrowUpIcon} alt='Increase time' className='w-3' />
+												<img
+													src={ArrowUpIcon}
+													alt='Increase time'
+													className='w-3 opacity-25 hover:opacity-100 transition-opacity'
+												/>
 											</button>
 											<button
 												type='button'
@@ -96,7 +100,11 @@ export default function Settings() {
 												onClick={() =>
 													onChangeTime(mode, (formData.durations[mode] - 1).toString())
 												}>
-												<img src={ArrowDownIcon} alt='Decrease time' className='w-3' />
+												<img
+													src={ArrowDownIcon}
+													alt='Decrease time'
+													className='w-3 opacity-25 hover:opacity-100 transition-opacity'
+												/>
 											</button>
 										</div>
 									</div>
