@@ -1,9 +1,11 @@
 import {MODES, MODES_NAMES} from '../constants/settings';
 import {COLORS_STYLES, FONTS_STYLES} from '../constants/styles';
 import {useAppStore} from '../stores/app';
+import {useSettingsStore} from '../stores/settings';
 
 export default function Modes() {
-	const {mode, setMode, settings} = useAppStore();
+	const {mode, setMode} = useAppStore();
+	const {settings} = useSettingsStore();
 
 	return (
 		<section aria-label='Timer Mode Selection' className='w-full z-10'>

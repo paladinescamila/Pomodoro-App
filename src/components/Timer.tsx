@@ -2,12 +2,14 @@ import {useEffect, useMemo} from 'react';
 import {formatSeconds} from '../utils/formatSeconds';
 import {useCountDown} from '../hooks/useCountDown';
 import {useAppStore} from '../stores/app';
+import {useSettingsStore} from '../stores/settings';
 import {useResponsive} from '../hooks/useResponsive';
 import {COLORS_STYLES, FONTS_STYLES} from '../constants/styles';
 import {BUTTON_BY_TIMER_STATE, TEXT_BY_TIMER_STATE} from '../constants/timer-state';
 
 export default function Timer() {
-	const {mode, settings} = useAppStore();
+	const {mode} = useAppStore();
+	const {settings} = useSettingsStore();
 
 	const totalSeconds = useMemo(() => settings.durations[mode] * 60, [mode, settings]);
 

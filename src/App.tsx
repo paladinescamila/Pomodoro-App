@@ -1,13 +1,13 @@
-import {useState} from 'react';
 import Logo from './assets/logo.svg';
 import SettingsIcon from './assets/icon-settings.svg';
 import Modes from './components/Modes';
 import Timer from './components/Timer';
 import Settings from './components/Settings';
+import {useAppStore} from './stores/app';
 import './index.css';
 
 function App() {
-	const [settingsIsOpened, setSettingsIsOpened] = useState<boolean>(false);
+	const {settingsIsOpened, openSettings} = useAppStore();
 
 	return (
 		<>
@@ -25,12 +25,12 @@ function App() {
 						type='button'
 						aria-label='Settings'
 						className='cursor-pointer opacity-50 hover:opacity-100 transition-opacity'
-						onClick={() => setSettingsIsOpened(true)}>
+						onClick={openSettings}>
 						<img src={SettingsIcon} alt='Settings' />
 					</button>
 				</footer>
 			</main>
-			{settingsIsOpened && <Settings close={() => setSettingsIsOpened(false)} />}
+			{settingsIsOpened && <Settings />}
 		</>
 	);
 }

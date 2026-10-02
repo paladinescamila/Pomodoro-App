@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 import {useAppStore} from '../stores/app';
+import {useSettingsStore} from '../stores/settings';
 import {MODES, FONTS, COLORS, MODES_NAMES, MIN_DURATION, MAX_DURATION} from '../constants/settings';
 import {FONTS_STYLES_SETTINGS} from '../constants/styles';
 import {COLORS_STYLES} from '../constants/styles';
@@ -8,8 +9,9 @@ import CheckIcon from '../assets/icon-check.svg';
 import ArrowUpIcon from '../assets/icon-arrow-up.svg';
 import ArrowDownIcon from '../assets/icon-arrow-down.svg';
 
-export default function Settings({close}: {close: () => void}) {
-	const {settings, setSettings} = useAppStore();
+export default function Settings() {
+	const {closeSettings} = useAppStore();
+	const {settings, setSettings} = useSettingsStore();
 
 	const [formData, setFormData] = useState<Settings>(settings);
 	const dialogRef = useRef<HTMLDialogElement>(null);
@@ -35,12 +37,12 @@ export default function Settings({close}: {close: () => void}) {
 	const applyChanges = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setSettings(formData);
-		close();
+		closeSettings();
 	};
 
 	const onClose = () => {
 		setFormData(settings);
-		close();
+		closeSettings();
 	};
 
 	useEffect(() => {
