@@ -1,4 +1,4 @@
-import {useEffect, useMemo} from 'react';
+import {useMemo} from 'react';
 import {formatSeconds} from '../utils/formatSeconds';
 import {useCountDown} from '../hooks/useCountDown';
 import {useAppStore} from '../stores/app';
@@ -13,15 +13,9 @@ export default function Timer() {
 
 	const totalSeconds = useMemo(() => settings.durations[mode] * 60, [mode, settings]);
 
-	const {secondsLeft, timerState, toggleTimer, reset} = useCountDown(totalSeconds);
+	const {secondsLeft, timerState, toggleTimer} = useCountDown(totalSeconds, mode);
 
 	const {isMobile} = useResponsive();
-
-	// If the mode changes, reset the timer to the new mode's duration
-	useEffect(() => {
-		reset(totalSeconds);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [mode]);
 
 	const {size, strokeWidth, radius, circumference, strokeDashoffset} = useMemo(() => {
 		const size = isMobile ? 250 : 339;

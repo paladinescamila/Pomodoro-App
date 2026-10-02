@@ -5,9 +5,10 @@ import {playNotification} from '../utils/playNotification';
 /**
  * Custom hook to manage a countdown timer.
  * @param initialSeconds The initial number of seconds for the countdown.
+ * @param mode The current mode of the application.
  * @returns An object containing the current seconds left, a function to set seconds left, a boolean indicating if the timer is running, and functions to start, stop, and toggle the timer.
  */
-export const useCountDown = (initialSeconds: number) => {
+export const useCountDown = (initialSeconds: number, mode?: Mode) => {
 	const [secondsLeft, setSecondsLeft] = useState<number>(initialSeconds);
 	const [timerState, setTimerState] = useState<TimerState>('initial');
 	const timerRef = useRef<number | null>(null);
@@ -67,11 +68,15 @@ export const useCountDown = (initialSeconds: number) => {
 		setSecondsLeft(secondsLeft);
 	}, []);
 
+	// Reset the timer when the initialSeconds prop changes (when settings or mode changes)
 	useEffect(() => {
+		const timeout = setTimeout(() => reset(initialSeconds), 10);
+
 		return () => {
 			clearTimer();
+			clearTimeout(timeout);
 		};
-	}, []);
+	}, [initialSeconds, mode]);
 
 	return {secondsLeft, timerState, start, stop, toggleTimer, reset};
 };
