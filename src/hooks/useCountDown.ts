@@ -61,13 +61,11 @@ export const useCountDown = (initialSeconds: number) => {
 		[timerState, start, stop, restart],
 	);
 
-	const reset = useCallback(
-		(secondsLeft: number) => {
-			setSecondsLeft(secondsLeft);
-			restart();
-		},
-		[restart],
-	);
+	const reset = useCallback((secondsLeft: number) => {
+		setTimerState('initial');
+		clearTimer();
+		setSecondsLeft(secondsLeft);
+	}, []);
 
 	useEffect(() => {
 		return () => {

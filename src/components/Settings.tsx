@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 import {useAppStore} from '../stores/app';
 import {MODES, FONTS, COLORS, MODES_NAMES, MIN_DURATION, MAX_DURATION} from '../constants/settings';
@@ -12,6 +12,8 @@ export default function Settings({close}: {close: () => void}) {
 	const {settings, setSettings} = useAppStore();
 
 	const [formData, setFormData] = useState<Settings>(settings);
+	const dialogRef = useRef<HTMLDialogElement>(null);
+	const previouslyFocusedElement = useRef<HTMLElement | null>(null);
 
 	const onChangeTime = (mode: Mode, duration: string) => {
 		const numericDuration = parseInt(duration, 10);
@@ -41,10 +43,68 @@ export default function Settings({close}: {close: () => void}) {
 		close();
 	};
 
+	useEffect(() => {
+		previouslyFocusedElement.current =
+			document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+		const dialog = dialogRef.current;
+
+		if (!dialog) return;
+
+		if (typeof dialog.showModal === 'function' && !dialog.open) {
+			dialog.showModal();
+		}
+
+		const firstFocusableElement = dialog.querySelector<HTMLElement>(
+			'button, input, select, textarea, [tabindex]:not([tabindex="-1"])',
+		);
+
+		(firstFocusableElement ?? dialog).focus();
+
+		const trapFocus = (event: KeyboardEvent) => {
+			if (event.key !== 'Tab') {
+				return;
+			}
+
+			const focusableElements = Array.from(
+				dialog.querySelectorAll<HTMLElement>(
+					'button, input, select, textarea, [tabindex]:not([tabindex="-1"])',
+				),
+			);
+			if (focusableElements.length === 0) {
+				event.preventDefault();
+				dialog.focus();
+				return;
+			}
+
+			const firstElement = focusableElements[0];
+			const lastElement = focusableElements[focusableElements.length - 1];
+			if (event.shiftKey && document.activeElement === firstElement) {
+				event.preventDefault();
+				lastElement.focus();
+			} else if (!event.shiftKey && document.activeElement === lastElement) {
+				event.preventDefault();
+				firstElement.focus();
+			}
+		};
+
+		dialog.addEventListener('keydown', trapFocus);
+		return () => {
+			dialog.removeEventListener('keydown', trapFocus);
+			previouslyFocusedElement.current?.focus();
+		};
+	}, []);
+
 	return createPortal(
 		<dialog
-			open={true}
+			ref={dialogRef}
+			tabIndex={-1}
+			onCancel={(event) => {
+				event.preventDefault();
+				onClose();
+			}}
 			aria-labelledby='settings-heading'
+			aria-modal='true'
 			className='absolute inset-0 flex items-center justify-center w-full h-dvh bg-blue-850/50 backdrop-blur-sm p-4 z-20'>
 			<div className='bg-white w-full md:w-135 px-9 pt-8 pb-14 rounded-3xl relative'>
 				<header className='flex flex-row items-center justify-between'>

@@ -35,6 +35,10 @@
 	--font-3: 'Space Mono', monospace;
 }
 
+body {
+	@apply bg-blue-850;
+}
+
 @utility text-preset-1-font-1 {
 	font-family: var(--font-1);
 	font-weight: bold;

@@ -1,5 +1,5 @@
 import {act, renderHook} from '@testing-library/react';
-import {beforeEach, describe, expect, it, vi} from 'vitest';
+import {afterEach, beforeEach, describe, expect, it, vi} from 'vitest';
 import {useCountDown} from './useCountDown';
 
 const playNotification = vi.hoisted(() => vi.fn());
@@ -10,6 +10,10 @@ describe('useCountDown', () => {
 	beforeEach(() => {
 		vi.useFakeTimers();
 		playNotification.mockClear();
+	});
+
+	afterEach(() => {
+		vi.useRealTimers();
 	});
 
 	it('counts down while running and stops when paused', () => {
@@ -57,9 +61,9 @@ describe('useCountDown', () => {
 
 		act(() => result.current.start());
 		act(() => vi.advanceTimersByTime(1000));
-		act(() => result.current.reset(3));
+		act(() => result.current.reset(5));
 
 		expect(result.current.timerState).toBe('initial');
-		expect(result.current.secondsLeft).toBe(3);
+		expect(result.current.secondsLeft).toBe(5);
 	});
 });
