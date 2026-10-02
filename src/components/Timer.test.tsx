@@ -10,9 +10,10 @@ const countdown = vi.hoisted(() => ({
 	timerState: 'initial' as TimerState,
 	toggleTimer: vi.fn(),
 }));
+const useCountDownMock = vi.hoisted(() => vi.fn(() => countdown));
 
 vi.mock('../hooks/useCountDown', () => ({
-	useCountDown: () => countdown,
+	useCountDown: useCountDownMock,
 }));
 
 vi.mock('../hooks/useResponsive', () => ({
@@ -26,6 +27,7 @@ describe('Timer', () => {
 		countdown.secondsLeft = 1500;
 		countdown.timerState = 'initial';
 		countdown.toggleTimer.mockClear();
+		useCountDownMock.mockClear();
 	});
 
 	afterEach(() => {
@@ -56,5 +58,27 @@ describe('Timer', () => {
 		countdown.timerState = 'completed';
 		act(() => rerender(<Timer />));
 		expect(getAnnouncement()?.textContent).toBe('Timer completed');
+	});
+
+	it('updates progress as the countdown advances', () => {
+		const {rerender} = render(<Timer />);
+		const progressCircle = document.querySelectorAll('circle')[1];
+		const initialOffset = progressCircle.getAttribute('stroke-dashoffset');
+
+		countdown.secondsLeft = 1200;
+		act(() => rerender(<Timer />));
+
+		expect(progressCircle.getAttribute('stroke-dashoffset')).not.toBe(initialOffset);
+	});
+
+	it.each([
+		['pomodoro', 25],
+		['short-break', 5],
+		['long-break', 15],
+	] as const)('uses the configured duration for %s mode', (mode, duration) => {
+		useAppStore.setState({mode});
+		render(<Timer />);
+
+		expect(useCountDownMock).toHaveBeenCalledWith(duration * 60, mode);
 	});
 });

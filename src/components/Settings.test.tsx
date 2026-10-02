@@ -6,14 +6,16 @@ import {useSettingsStore} from '../stores/settings';
 import {INITIAL_SETTINGS} from '../constants/settings';
 
 describe('Settings', () => {
+	afterEach(() => {
+		cleanup();
+		vi.restoreAllMocks();
+	});
+
 	beforeEach(() => {
 		HTMLDialogElement.prototype.showModal = vi.fn(function (this: HTMLDialogElement) {
 			this.open = true;
 		});
 
-		afterEach(() => {
-			cleanup();
-		});
 		useAppStore.setState({settingsIsOpened: true});
 		useSettingsStore.setState({settings: INITIAL_SETTINGS});
 	});
