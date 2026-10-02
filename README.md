@@ -6,7 +6,7 @@ This is a solution to the [Pomodoro App challenge on Frontend Mentor](https://ww
 
 ## Links
 
-- [Solution](https://github.com/paladinescamila/Pomodoro-App)
+- [Solution](https://www.frontendmentor.io/solutions/pomodoro-app-qVk10kQeLf)
 - [Live Site](http://pomodoro-app-paladinescamila.netlify.app)
 
 ## Built with
