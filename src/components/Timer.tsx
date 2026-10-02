@@ -63,6 +63,15 @@ export default function Timer() {
 						{formatSeconds(secondsLeft, 'mm:ss')}
 					</time>
 				</div>
+				<div aria-live='polite' aria-atomic='true' className='sr-only'>
+					{timerState === 'running'
+						? 'Timer started'
+						: timerState === 'stopped'
+							? 'Timer paused'
+							: timerState === 'completed'
+								? 'Timer completed'
+								: ''}
+				</div>
 
 				<button
 					type='button'

@@ -194,14 +194,14 @@ export default function Settings() {
 											id={`font-${font}`}
 											name='fontTheme'
 											value={font}
-											className='sr-only'
+											className='peer sr-only'
 											aria-label={`Select ${font} font`}
 											onChange={() => onChangeFont(font)}
 											defaultChecked={formData.font === font}
 										/>
 										<label
 											htmlFor={`font-${font}`}
-											className={`${FONTS_STYLES_SETTINGS[font]} w-10 h-10 rounded-full flex items-center justify-center cursor-pointer hover:outline hover:outline-blue-50 hover:outline-offset-3 ${formData.font === font ? 'bg-blue-900 text-white' : 'bg-blue-50 text-blue-850/70'}`}>
+											className={`${FONTS_STYLES_SETTINGS[font]} w-10 h-10 rounded-full flex items-center justify-center cursor-pointer hover:outline hover:outline-blue-50 hover:outline-offset-3 peer-focus-visible:outline peer-focus-visible:outline-blue-850 peer-focus-visible:outline-offset-3 ${formData.font === font ? 'bg-blue-900 text-white' : 'bg-blue-50 text-blue-850/70'}`}>
 											<span aria-hidden='true'>Aa</span>
 										</label>
 									</div>
@@ -225,16 +225,18 @@ export default function Settings() {
 											id={`color-${color}`}
 											name='colorTheme'
 											value={color}
-											className='sr-only'
+											className='peer sr-only'
 											aria-label={`Select ${color} color theme`}
 											onChange={() => onChangeColor(color)}
 											defaultChecked={formData.color === color}
 										/>
 										<label
 											htmlFor={`color-${color}`}
-											className={`w-10 h-10 rounded-full cursor-pointer flex items-center justify-center hover:outline hover:outline-blue-50 hover:outline-offset-3  ${COLORS_STYLES[color].background}`}>
+											className={`w-10 h-10 rounded-full cursor-pointer flex items-center justify-center hover:outline hover:outline-blue-50 hover:outline-offset-3 peer-focus-visible:outline peer-focus-visible:outline-blue-850 peer-focus-visible:outline-offset-3 ${COLORS_STYLES[color].background}`}>
 											<span className='sr-only'>{color} theme</span>
-											{formData.color === color && <img src={CheckIcon} />}
+											{formData.color === color && (
+												<img src={CheckIcon} alt={`Selected ${color} color theme`} />
+											)}
 										</label>
 									</div>
 								))}

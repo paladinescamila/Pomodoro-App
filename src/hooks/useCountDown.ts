@@ -69,7 +69,14 @@ export const useCountDown = (initialSeconds: number, mode?: Mode) => {
 	}, []);
 
 	// Reset the timer when the initialSeconds prop changes (when settings or mode changes)
+	const hasMounted = useRef<boolean>(false);
+
 	useEffect(() => {
+		if (!hasMounted.current) {
+			hasMounted.current = true;
+			return clearTimer;
+		}
+
 		const timeout = setTimeout(() => reset(initialSeconds), 10);
 
 		return () => {
